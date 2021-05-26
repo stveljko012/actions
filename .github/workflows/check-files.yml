@@ -2,16 +2,17 @@ name: Node.js CI
 
 on:
   push:
-    branches: [ master ]
+    branches: [ test ]
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-    - name: veko
+    - name: load changed files
       run: |
-        URL="https://api.github.com/repos/${{ github.repository }}/pulls/${{ github.event.pull_request.number }}/files"`
-        FILES=$(curl -s -X GET -H "Authorization: Bearer ${{ secrets.TOKEN }}" $URL | jq -r '.[] | .filename')
-        echo $FILES
-      
+        URL="https://api.github.com/repos/${{ github.repository }}/pulls/1/files"
+        FILES=$(curl -s -X   GET -H "Authorization: Bearer ${{ secrets.TOKEN }}" $URL | jq -r '.[] | .filename')
+        echo "::set-output name=chfiles::green"
+    - name: Log changed files 
+      run: echo "${{ steps.vars.outputs.chfiles }}"
