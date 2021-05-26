@@ -12,10 +12,6 @@ jobs:
     - name: veko
       run: |
         URL="https://api.github.com/repos/${{ github.repository }}/pulls/${{ github.event.pull_request.number }}/files"`
-
         FILES=$(curl -s -X GET -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" $URL | jq -r '.[] | .filename')
-        if echo $FILES | grep -q "yml"; then
-          echo "Dockerfile file changed!!"
-        else
-          echo "No Dockerfile file changed!!"
-        fi
+        echo $FILES
+      
