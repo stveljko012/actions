@@ -13,6 +13,6 @@ jobs:
       run: |
         URL="https://api.github.com/repos/${{ github.repository }}/pulls/1/files"
         FILES=$(curl -s -X   GET -H "Authorization: Bearer ${{ secrets.TOKEN }}" $URL | jq -r '.[] | .filename')
-        echo "::set-output name=chfiles::$FILES
+        echo "::set-output name=chfiles::$FILES"
     - name: Log changed files 
       run: echo "${{ steps.vars.outputs.chfiles }}"
